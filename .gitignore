@@ -1,0 +1,91 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# =========================
+# Virtual Environment
+# =========================
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# Environment Variables / Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Jupyter Notebook
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# RAG / Vector Database
+# =========================
+chroma/
+chroma_db/
+vectorstore/
+vector_db/
+.faiss/
+
+# =========================
+# Uploaded / Local Documents
+# =========================
+*.pdf
+*.docx
+*.txt
+
+# If you want to commit specific sample files,
+# add them explicitly using !, for example:
+# !sample.pdf
+# !notes.txt
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Python Build
+# =========================
+build/
+dist/
+*.egg-info/
+
+# =========================
+# Testing / Coverage
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.temp
+temp/
+tmp/
