@@ -1,3 +1,8 @@
+#load pdf
+# split into chunks
+# create embeddings
+# store into chromadb
+
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_mistralai import MistralAIEmbeddings
