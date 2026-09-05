@@ -1,21 +1,63 @@
 from dotenv import load_dotenv
 load_dotenv()
-from langchain_google_genai import GoogleGenerativeAI
+from langchain_chroma import Chroma
+from langchain_mistralai import ChatMistralAI,MistralAIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_community.document_loaders import PyPDFLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-data=PyPDFLoader("document loaders/deeplearning.pdf")
-docs=data.load()
-# text = "\n".join(doc.page_content for doc in docs)
-splitter=RecursiveCharacterTextSplitter(
-    chunk_size=1000,
-    chunk_overlap=200
+from langchain_core.documents import Document
+
+embedding_model=MistralAIEmbeddings()
+
+vectorstore=Chroma(
+    persist_directory="chroma_db",
+    embedding_function=embedding_model
 )
-chunks=splitter.split_documents(docs)
-template=ChatPromptTemplate.from_messages([
-    ("system","you are an Ai that summarizes the text"),("human","{data}")
-])
-model=GoogleGenerativeAI(model="gemini-3.5-flash-lite",temperature=0.1) 
-prompt=template.format_messages(data=docs)
-result = model.invoke(prompt)
-print(result)
+
+retreiver=vectorstore.as_retriever(
+    search_type="mmr",
+    searchkwargs={
+        "k":4,
+        "fetch_k":10,
+        "lambda_mult":0.5
+                  }
+)
+
+llm=ChatMistralAI(model="voxtral-small-2507")
+
+# prompt template
+
+prompt=ChatPromptTemplate.from_messages(
+    [
+        ("system",
+            """You are a helpful AI assistant.
+                Use ONLY the provided context to answer the question.
+                If the answer is not present in the context,
+                  say: "I could not find the answer in the document."   """),
+                   (
+            "human",
+            """ Context: {context}
+            Question: {question} """
+        )
+
+    ]
+)
+
+print("RAG System created")
+
+print("press 0 to exit")
+
+while True:
+    query=input("You : ")
+    if query=="0":
+        break
+    docs=retreiver.invoke(query)
+
+    context="\n\n".join([doc.page_content for doc in docs])
+
+    final_prompt=prompt.invoke({
+        "context":context,
+        "question":query
+    })
+
+    response=llm.invoke(final_prompt)
+
+    print( f"\n AI : {response.content}")
