@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { PatraLogo } from "./logo"; // Adjust path if you put it in a components folder
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 type Message = {
   role: "user" | "ai";
   content: string;
@@ -40,10 +41,10 @@ export default function RAGDashboard() {
     }
 
     try {
-      const res = await fetch("http://localhost:8000/upload", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch(`${API_BASE_URL}/upload`, {
+      method: "POST",
+      body: formData,
+    });
       const data = await res.json();
       
       if (res.ok) {
@@ -70,11 +71,11 @@ export default function RAGDashboard() {
     setIsTyping(true);
 
     try {
-      const res = await fetch("https://terrific-emotion-production-e26e.up.railway.app/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: userMessage }),
-      });
+      const res = await fetch(`${API_BASE_URL}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: userMessage }),
+    });
       
       const data = await res.json();
       
