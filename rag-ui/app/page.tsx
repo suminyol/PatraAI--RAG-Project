@@ -70,7 +70,7 @@ export default function RAGDashboard() {
     setIsTyping(true);
 
     try {
-      const res = await fetch("http://localhost:8000/chat", {
+      const res = await fetch("https://terrific-emotion-production-e26e.up.railway.app/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: userMessage }),
@@ -139,7 +139,6 @@ export default function RAGDashboard() {
           </div>
         </div>
 
-        {/* Chat History */}
         {/* Chat History */}
 <div className="flex-1 overflow-y-auto p-6 space-y-6">
   {messages.map((msg, idx) => (
