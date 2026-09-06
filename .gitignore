@@ -44,8 +44,7 @@ vector_db/
 
 # If you want to commit specific sample files,
 # add them explicitly using !, for example:
-# !sample.pdf
-# !notes.txt
+ !requirements.txt
 
 # =========================
 # Logs
