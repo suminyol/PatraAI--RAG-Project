@@ -1,0 +1,26 @@
+// app/PatraLogo.tsx
+export function PatraLogo({ className = "w-8 h-8" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <defs>
+        <linearGradient id="patraGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#2563EB" /> {/* text-blue-600 */}
+          <stop offset="100%" stopColor="#4F46E5" /> {/* text-indigo-600 */}
+        </linearGradient>
+      </defs>
+      {/* Modern 'P' shape */}
+      <path 
+        d="M25 85V15H55C71.569 15 85 28.431 85 45C85 61.569 71.569 75 55 75H45V85H25Z" 
+        fill="url(#patraGrad)" 
+      />
+      {/* Inner data node cutout */}
+      <circle cx="55" cy="45" r="12" fill="white" />
+      <circle cx="55" cy="45" r="4" fill="url(#patraGrad)" />
+      {/* Sparkle/AI accent */}
+      <path 
+        d="M80 15L85 5L90 15L100 20L90 25L85 35L80 25L70 20L80 15Z" 
+        fill="#F59E0B" 
+      />
+    </svg>
+  );
+}
