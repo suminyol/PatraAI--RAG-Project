@@ -15,14 +15,22 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from typing import List
+from langchain_pinecone import PineconeVectorStore
+
 # Environment
 
 load_dotenv()
 
 HF_TOKEN = os.getenv("HF_TOKEN")
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 
 if not HF_TOKEN:
     raise ValueError("HF_TOKEN is missing from .env")
+if not PINECONE_API_KEY:
+    raise ValueError("PINECONE_API_KEY is missing from .env")
+
+# LangChain's Pinecone wrapper automatically looks for this exact environment variable
+os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
 
 
 # =========================
@@ -65,14 +73,15 @@ embedding_model = HuggingFaceEmbeddings(
 
 
 # =========================
-# ChromaDB
+# PineconeDB
 # =========================
 
-vectorstore = Chroma(
-    persist_directory="chroma_db",
-    embedding_function=embedding_model
-)
+index_name = "patra-ai" 
 
+vectorstore = PineconeVectorStore(
+    index_name=index_name,
+    embedding=embedding_model
+)
 
 # =========================
 # Retriever
