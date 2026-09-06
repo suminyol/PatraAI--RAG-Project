@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { PatraLogo } from "./logo"; // Adjust path if you put it in a components folder
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE_URL = process.env.SERVER_PUBLIC_API_URL || "http://localhost:8000";
 type Message = {
   role: "user" | "ai";
   content: string;
